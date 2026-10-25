@@ -168,6 +168,14 @@ def test_live_ollama_generates_text():
 
 @pytest.mark.live
 @pytest.mark.skipif(not _ollama_has("llama3.2"), reason="Ollama with llama3.2 is not available")
+def test_live_ollama_knows_the_capital_of_france_is_paris():
+    prompt = "What is the capital of France? Answer with the city name only."
+    text = "".join(stream_generate(DEFAULT_URL, "llama3.2", prompt, timeout=120))
+    assert "paris" in text.lower(), f"unexpected answer: {text!r}"
+
+
+@pytest.mark.live
+@pytest.mark.skipif(not _ollama_has("llama3.2"), reason="Ollama with llama3.2 is not available")
 def test_live_ollama_unknown_model_is_reported():
     with pytest.raises(OllamaError) as excinfo:
         list(stream_generate(DEFAULT_URL, "no-such-model-xyz", "hi", timeout=30))
