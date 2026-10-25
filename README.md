@@ -16,9 +16,11 @@ Ollama must be running on `localhost:11434` for the script and the `live` tests.
 ```bash
 make            # run the tests, then every scenario
 make test       # run all tests
+make test-fast  # skip the slow tests that call the real Ollama
 make run        # run every scenario
 make run1 PROMPT="tell me a story about a llama"
 make run2 QUESTION="how deep is the ocean?"
+make run3
 ```
 
 ## Scenarios
@@ -27,7 +29,8 @@ make run2 QUESTION="how deep is the ocean?"
 |---------|--------------|
 | `src/1` | Streams a generated story from `llama3.2` via `/api/generate` (`1.py`, logic in `story.py`). |
 | `src/2` | Uses the `ollama` library: list, chat, generate, and a temporary `knowitall` model created from `llama3.2` and deleted afterwards (`2.py`, logic in `ollama_basics.py`). |
+| `src/3` | Categorizes and sorts `data/grocery_list.txt` with `llama3.2` and saves the result to `data/categorized_grocery_list.txt` (`3.py`, logic in `grocery.py`). |
 
 Each scenario keeps its tests in its own `tests/` folder: `test_unit.py` (no network) and
-`test_integration.py` (a fake Ollama over real HTTP, plus `live` tests against the real
+`test_integration.py` or `test_e2e.py` (a fake Ollama over real HTTP, plus `live` tests against the real
 Ollama, skipped when it is not running). Skip the live ones with `pytest -m "not live"`.
