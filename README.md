@@ -35,3 +35,13 @@ make run3
 Each scenario keeps its tests in its own `tests/` folder: `test_unit.py` (no network) and
 `test_integration.py` or `test_e2e.py` (a fake Ollama over real HTTP, plus `live` tests against the real
 Ollama, skipped when it is not running). Skip the live ones with `pytest -m "not live"`.
+
+## Continuous integration
+
+A local [Jenkins](https://www.jenkins.io) LTS (installed with `sudo bash ci/install-jenkins.sh`,
+listening on `http://localhost:8080` only) runs the `Jenkinsfile` pipeline:
+
+- it checks GitHub every 2 minutes and builds each new commit on `main`;
+- each build creates a fresh `.venv`, runs every test with coverage, and fails if a test
+  fails or coverage drops below 95%;
+- test results, the coverage trend and the HTML coverage report are kept for each build.
