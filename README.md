@@ -17,6 +17,7 @@ Ollama must be running on `localhost:11434` for the script and the `live` tests.
 make            # run the tests, then every scenario
 make test       # run all tests
 make test-fast  # skip the slow tests that call the real Ollama
+make coverage   # run all tests and measure code coverage (HTML report in htmlcov/)
 make run        # run every scenario
 make run1 PROMPT="tell me a story about a llama"
 make run2 QUESTION="how deep is the ocean?"

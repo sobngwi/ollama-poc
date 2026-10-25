@@ -1,0 +1,15 @@
+[run]
+source = src
+branch = true
+omit =
+    */tests/*
+    */conftest.py
+# Also measure the scripts the end-to-end tests start as separate processes (1.py, 2.py, 3.py).
+patch = subprocess
+
+[report]
+show_missing = true
+skip_empty = true
+
+[html]
+directory = htmlcov

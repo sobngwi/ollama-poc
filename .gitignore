@@ -3,3 +3,6 @@ __pycache__/
 .pytest_cache/
 *.swp
 src/3/data/categorized_grocery_list.txt
+htmlcov/
+.coverage
+.coverage.*

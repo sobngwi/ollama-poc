@@ -2,7 +2,7 @@ PYTHON := .venv/bin/python
 PROMPT ?= tell me a joke
 QUESTION ?= why is the ocean so salty?
 
-.PHONY: all test test-fast run run1 run2 run3
+.PHONY: all test test-fast coverage run run1 run2 run3
 
 all: test run
 
@@ -11,6 +11,10 @@ test:
 
 test-fast:
 	$(PYTHON) -m pytest -m "not live"
+
+coverage:
+	$(PYTHON) -m pytest --cov --cov-report=term-missing --cov-report=html
+	@echo "HTML report: htmlcov/index.html"
 
 run: run1 run2 run3
 
