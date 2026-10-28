@@ -1,4 +1,5 @@
 .venv/
+.venv.old/
 __pycache__/
 .pytest_cache/
 *.swp

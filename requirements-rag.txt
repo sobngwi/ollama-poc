@@ -1,0 +1,10 @@
+# Extra packages for pdf-rag.py (large: unstructured[pdf] pulls in PyTorch).
+# Kept out of requirements.txt so CI builds stay small.
+-r requirements.txt
+langchain>=1,<2
+langchain-classic>=1,<2
+langchain-unstructured>=1,<2
+langchain-ollama>=1,<2
+langchain-text-splitters>=1,<2
+langchain-chroma>=1,<2
+unstructured[pdf]
