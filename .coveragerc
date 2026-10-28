@@ -4,7 +4,7 @@ branch = true
 omit =
     */tests/*
     */conftest.py
-# Also measure the scripts the end-to-end tests start as separate processes (1.py, 2.py, 3.py).
+# Also measure the scripts the end-to-end tests start as separate processes (1.py ... 4.py).
 patch = subprocess
 
 [report]

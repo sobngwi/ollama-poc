@@ -5,8 +5,7 @@ Small Python scenarios that talk to a local [Ollama](https://ollama.com) server,
 ## Setup
 
 ```bash
-python3 -m venv .venv
-.venv/bin/pip install -r requirements-dev.txt
+make install   # creates .venv with requirements-dev.txt and requirements-rag.txt
 ```
 
 Ollama must be running on `localhost:11434` for the script and the `live` tests.
@@ -22,6 +21,7 @@ make run        # run every scenario
 make run1 PROMPT="tell me a story about a llama"
 make run2 QUESTION="how deep is the ocean?"
 make run3
+make run4 RAG_QUESTION="what must I report?" TRACE=1
 ```
 
 ## Scenarios
@@ -31,6 +31,7 @@ make run3
 | `src/1` | Streams a generated story from `llama3.2` via `/api/generate` (`1.py`, logic in `story.py`). |
 | `src/2` | Uses the `ollama` library: list, chat, generate, and a temporary `knowitall` model created from `llama3.2` and deleted afterwards (`2.py`, logic in `ollama_basics.py`). |
 | `src/3` | Categorizes and sorts `data/grocery_list.txt` with `llama3.2` and saves the result to `data/categorized_grocery_list.txt` (`3.py`, logic in `grocery.py`). |
+| `src/4` | Answers a question about `data/BOI.pdf` with a local RAG pipeline: LangChain, an in-memory Chroma store with `nomic-embed-text` embeddings, and a multi-query retriever over `llama3.2`; `--trace` prints every vector-database query and the chunks it returns (`4.py`, logic in `pdf_rag.py`). |
 
 Each scenario keeps its tests in its own `tests/` folder: `test_unit.py` (no network) and
 `test_integration.py` or `test_e2e.py` (a fake Ollama over real HTTP, plus `live` tests against the real

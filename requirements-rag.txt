@@ -1,5 +1,5 @@
-# Extra packages for pdf-rag.py (large: unstructured[pdf] pulls in PyTorch).
-# Kept out of requirements.txt so CI builds stay small.
+# Extra packages for scenario 4, src/4 (large: unstructured[pdf] pulls in PyTorch).
+# Kept apart from requirements.txt so scenarios 1-3 can be installed without them.
 -r requirements.txt
 langchain>=1,<2
 langchain-classic>=1,<2

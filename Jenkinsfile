@@ -22,9 +22,11 @@ pipeline {
     stages {
         stage('Set up Python') {
             steps {
+                // The venv is kept in the workspace between builds, so the large RAG
+                // packages (PyTorch) are only downloaded once.
                 sh '''
                     python3 -m venv .venv
-                    .venv/bin/pip install -q -r requirements-dev.txt
+                    .venv/bin/pip install -q -r requirements-dev.txt -r requirements-rag.txt
                 '''
             }
         }
