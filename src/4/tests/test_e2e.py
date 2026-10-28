@@ -116,6 +116,27 @@ def run_script(*args, cwd=SCENARIO_DIR):
 
 # --- the shipped PDF --------------------------------------------------------
 
+PROJECT_DIR = SCENARIO_DIR.parent.parent
+
+
+@pytest.mark.integration
+def test_spacy_model_is_installed_from_requirements():
+    # Unstructured needs en_core_web_sm. When it is missing it downloads it at run time
+    # behind a lock file in /tmp; another user's lock made that fail in Jenkins build #6.
+    import en_core_web_sm
+
+    assert en_core_web_sm.__version__ == "3.8.0"
+    requirements = (PROJECT_DIR / "requirements-rag.txt").read_text()
+    assert "en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/" \
+           "en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl#sha256=" in requirements
+
+
+@pytest.mark.integration
+def test_unstructured_does_not_download_the_spacy_model():
+    from unstructured.nlp.tokenize import sent_tokenize
+
+    assert sent_tokenize("One sentence. Two sentences.") == ["One sentence.", "Two sentences."]
+
 @pytest.mark.integration
 def test_shipped_pdf_loads_as_one_document():
     document = load_pdf(DEFAULT_PDF)

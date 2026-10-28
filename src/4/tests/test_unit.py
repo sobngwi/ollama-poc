@@ -112,9 +112,11 @@ def test_load_pdf_joins_elements_into_one_document(pdf_file, fake_elements):
     assert document.metadata == {"source": str(pdf_file)}
 
 
-def test_load_pdf_reads_locally_in_english(pdf_file, fake_elements):
+def test_load_pdf_reads_the_text_layer_locally_in_english(pdf_file, fake_elements):
     load_pdf(pdf_file, loader_cls=fake_elements)
-    assert fake_elements.calls == [{"file_path": str(pdf_file), "languages": ["eng"]}]
+    # strategy="fast" reads the PDF's text directly: Unstructured never falls back to
+    # OCR (Tesseract), which it silently did in Jenkins build #6.
+    assert fake_elements.calls == [{"file_path": str(pdf_file), "languages": ["eng"], "strategy": "fast"}]
 
 
 def test_load_pdf_missing_file_raises_before_loading(tmp_path, fake_elements):

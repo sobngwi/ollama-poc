@@ -8,3 +8,6 @@ langchain-ollama>=1,<2
 langchain-text-splitters>=1,<2
 langchain-chroma>=1,<2
 unstructured[pdf]
+# spaCy English model used by unstructured, pinned to the wheel unstructured expects.
+# Installed here so unstructured never downloads it at run time.
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl#sha256=1932429db727d4bff3deed6b34cfc05df17794f4a52eeb26cf8928f7c1a0fb85

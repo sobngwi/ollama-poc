@@ -82,9 +82,12 @@ def load_pdf(path, loader_cls=UnstructuredLoader):
     path = Path(path)
     if not path.is_file():
         raise FileNotFoundError(path)
+    # strategy="fast" reads the PDF's text layer directly. With the default "auto",
+    # Unstructured silently switches to OCR (which needs Tesseract) when a text check
+    # fails, e.g. because its spaCy model is missing.
     # The loader returns one Document per paragraph/title; join them into one document
     # so the chunks are cut by size, not by the PDF's layout.
-    elements = loader_cls(file_path=str(path), languages=["eng"]).load()
+    elements = loader_cls(file_path=str(path), languages=["eng"], strategy="fast").load()
     text = "\n\n".join(e.page_content for e in elements if e.page_content.strip())
     if not text:
         raise ValueError(f"no text found in PDF '{path}'")
